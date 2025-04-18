@@ -1,0 +1,24 @@
+{
+  "name": "@sendhelp/server",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Computer Network project server",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsx src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@sendhelp/core": "workspace:*",
+    "express": "^4.21.2",
+    "lowdb": "^7.0.1",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,5 +1,9 @@
 # SendHelp Chat Application
 
+## ถ้าฟิตฝากทำ
+- Docker
+- Config
+
 ## Overview
 
 SendHelp is a real-time chat application built with modern web technologies. The project is structured as a monorepo using pnpm workspaces, with three main packages:
@@ -26,6 +30,13 @@ SendHelp is a real-time chat application built with modern web technologies. The
 - **Backend**: Express.js, Socket.IO, LowDB (for simple data persistence)
 - **State Management**: Zustand
 - **Build Tools**: TypeScript, pnpm
+
+## Extra requirements
+
+### Persistance message
+
+Message does not disappear after the chat is closed or even when the server
+is restarted.
 
 ## Getting Started
 

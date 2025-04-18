@@ -1,0 +1,2 @@
+- [ ] Let copilot review before requesting others.
+- [ ] Add extra features description to README.md

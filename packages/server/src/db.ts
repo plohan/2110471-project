@@ -4,12 +4,12 @@ import { Room } from "@sendhelp/core";
 
 export type DB = {
   rooms: Room[];
-  userColors: {};
+  userColors: Record<string, string>;
 };
 
 const db: Low<DB> = new Low(new JSONFile("db.json"), {
   rooms: [],
-  userColors: {},
+  userColors: {} as Record<string, string>,
 });
 
 db.read().then(() => {

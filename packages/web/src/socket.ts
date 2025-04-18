@@ -9,7 +9,13 @@ export interface SocketOption {
 
 export function getSocket({ username }: SocketOption) {
   if (!socket) {
-    socket = io("http://localhost:8000", {
+    // Hardcoded hostname for development
+    // socket = io("http://localhost:8000", {
+    //   auth: {
+    //     username,
+    //   },
+    // });
+    socket = io({
       auth: {
         username,
       },

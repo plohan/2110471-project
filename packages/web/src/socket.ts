@@ -9,17 +9,20 @@ export interface SocketOption {
 
 export function getSocket({ username }: SocketOption) {
   if (!socket) {
-    // Hardcoded hostname for development
-    // socket = io("http://localhost:8000", {
-    //   auth: {
-    //     username,
-    //   },
-    // });
-    socket = io({
-      auth: {
-        username,
-      },
-    });
+    const url = process.env.NEXT_PUBLIC_SERVER_URL;
+    if (url && url !== "") {
+      socket = io(url, {
+        auth: {
+          username,
+        },
+      });
+    } else {
+      socket = io({
+        auth: {
+          username,
+        },
+      });
+    }
   }
   return socket;
 }

@@ -6,7 +6,10 @@
     "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "outDir": "./dist",
-    "declaration": true
+    "declaration": true,
+    "paths": {
+      "@sendhelp/core": ["../core/src"]  // Adjust path as needed
+    }
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]

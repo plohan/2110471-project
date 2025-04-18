@@ -1,9 +1,5 @@
 # SendHelp Chat Application
 
-## ถ้าฟิตฝากทำ
-- Docker
-- Config
-
 ## Overview
 
 SendHelp is a real-time chat application built with modern web technologies. The project is structured as a monorepo using pnpm workspaces, with three main packages:
@@ -16,10 +12,16 @@ SendHelp is a real-time chat application built with modern web technologies. The
 
 ```
 2110471-project/
+├── .docker/
+│   ├── default.conf        # nginx config
+│   ├── docker-compose.yaml
+│   ├── proxy.Dockerfile
+│   └── server.Dockerfile
 ├── packages/
 │   ├── core/               # Shared types and utilities
 │   ├── server/             # Backend server
 │   └── web/                # Frontend Next.js application
+├── .dockerignore           # Workspace configuration
 ├── pnpm-workspace.yaml     # Workspace configuration
 └── pnpm-lock.yaml          # Dependencies lock file
 ```
@@ -40,24 +42,33 @@ is restarted.
 
 ## Getting Started
 
-1. Make sure you have Node.js (>=18) and pnpm installed
+1. Make sure you have Node.js (>=20) and pnpm@10 installed
 2. Install dependencies:
-   ```
-   pnpm install
-   ```
+```bash
+pnpm install
+```
 
-3. Start the development server:
-   ```
-   # In one terminal, start the backend
-   cd packages/server
-   pnpm start
+3. Build core dependency
+```bash
+pnpm --filter=core build
+```
 
-   # In another terminal, start the frontend
-   cd packages/web
-   pnpm dev
-   ```
+4. Start the development server:
+```bash
+# In one terminal, start the backend
+pnpm --filter=server start
 
-4. Open your browser at http://localhost:3000
+# In another terminal, start the frontend
+cd packages/web
+pnpm --filter=web dev
+```
+
+5. Open your browser at http://localhost:3000
+
+## Quick docker compose
+```bash
+docker compose -f .docker/docker-compose.yaml --project-directory . up
+```
 
 ## Features
 

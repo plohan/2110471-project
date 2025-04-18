@@ -1,4 +1,6 @@
+*.md
 **/node_modules/
-**/dist/
+.git/
+.github/
 **/.env
 data/

@@ -1,0 +1,21 @@
+services:
+  web:
+    build:
+      dockerfile: .docker/proxy.Dockerfile
+      context: .
+    ports:
+      - "8001:80"
+    hostname: sendhelp-web
+
+  server:
+    build:
+      dockerfile: .docker/server.Dockerfile
+      context: .
+    environment:
+      - DATA_DIR=/var/lib/sendhelp/db.json
+    volumes:
+      - ./data:/var/lib/sendhelp
+    hostname: sendhelp-server
+
+networks:
+  default: {}

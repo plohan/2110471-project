@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Computer Network project server",
   "scripts": {
-    "build": "tsc",
+    "build": "esbuild --bundle src/index.ts --platform=node --target=node20 --outfile=dist/index.js",
     "start": "tsx src/index.ts"
   },
   "keywords": [],
@@ -18,7 +18,9 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
+    "esbuild": "^0.25.2",
     "tsx": "^4.19.3",
     "typescript": "^5.0.0"
-  }
+  },
+  "packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971"
 }

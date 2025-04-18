@@ -16,7 +16,7 @@ SendHelp is a real-time chat application built with modern web technologies. The
 │   ├── default.conf        # nginx config
 │   ├── docker-compose.yaml
 │   ├── proxy.Dockerfile
-│   └── web.Dockerfile
+│   └── server.Dockerfile
 ├── packages/
 │   ├── core/               # Shared types and utilities
 │   ├── server/             # Backend server

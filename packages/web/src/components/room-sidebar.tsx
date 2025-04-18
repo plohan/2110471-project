@@ -100,8 +100,7 @@ export function RoomSidebar(props: RoomSidebarProps) {
           U
         </div>
         <div className="ml-2">
-          <div className="text-sm font-medium">User</div>
-          <div className="text-xs text-gray-400">#1234</div>
+          <p className="text-sm font-medium">{data.username}</p>
         </div>
       </div>
     </div>

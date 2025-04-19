@@ -6,10 +6,12 @@ const filepath = process.env.DATA_DIR ?? "db.json";
 
 export type DB = {
   rooms: Room[];
+  userColors: Record<string, string>;
 };
 
 const db: Low<DB> = new Low(new JSONFile(filepath), {
   rooms: [],
+  userColors: {} as Record<string, string>,
 });
 
 console.log(`Loading database from ${filepath}`);

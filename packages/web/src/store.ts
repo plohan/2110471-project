@@ -3,7 +3,8 @@ import type { Message, Room } from "@sendhelp/core";
 import { randomUsername } from "./lib/utils";
 
 interface State {
-  username: string;
+  username: string | null;
+  setUsername: (username: string) => void;
   rooms: Room[];
   init: (rooms: Room[]) => void;
   addMessage: (message: Message) => void;
@@ -11,7 +12,8 @@ interface State {
 }
 
 export const useData = create<State>((set) => ({
-  username: randomUsername(),
+  username: null,
+  setUsername: (username: string) => set({ username }),
   rooms: [],
   init: (rooms: Room[]) => {
     set({ rooms });

@@ -27,7 +27,9 @@ export function RoomSidebar(props: RoomSidebarProps) {
   const [newRoomName, setNewRoomName] = useState<string>("");
 
   useEffect(() => {
-    data.setUsername(randomUsername());
+    if (!data.username) {
+      data.setUsername(randomUsername());
+    }
   }, []);
 
   function handleSendMessage(e: React.FormEvent) {

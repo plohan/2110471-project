@@ -1,7 +1,7 @@
 "use client";
 
 import { Hash, Plus } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, randomUsername } from "@/lib/utils";
 import { useData } from "@/store";
 import {
   Dialog,
@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { socketRoomCreate } from "@/socket";
 
@@ -25,6 +25,10 @@ export function RoomSidebar(props: RoomSidebarProps) {
   const data = useData();
   const { activeRoom, setActiveRoom } = props;
   const [newRoomName, setNewRoomName] = useState<string>("");
+
+  useEffect(() => {
+    data.setUsername(randomUsername());
+  }, []);
 
   function handleSendMessage(e: React.FormEvent) {
     e.preventDefault();

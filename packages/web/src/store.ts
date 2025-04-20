@@ -2,16 +2,17 @@ import { create } from "zustand";
 import type { Message, Room } from "@sendhelp/core";
 
 interface State {
-  username: string;
+  username: string | null;
+  setUsername: (username: string) => void;
   rooms: Room[];
   init: (rooms: Room[]) => void;
-  setUsername: (username: string) => void;
   addMessage: (message: Message) => void;
   addRoom: (room: Room) => void;
 }
 
 export const useData = create<State>((set) => ({
-  username: "",
+  username: null,
+  setUsername: (username: string) => set({ username }),
   rooms: [],
   init: (rooms: Room[]) => {
     set({ rooms });
@@ -25,10 +26,6 @@ export const useData = create<State>((set) => ({
     set((state) => {
       return { rooms: [...state.rooms, room] };
     }),
-  setUsername: (username: string) =>
-    set(() => ({
-      username,
-    })),
 }));
 
 function addMessage(rooms: Room[], message: Message): Room[] {

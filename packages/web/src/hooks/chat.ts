@@ -35,5 +35,5 @@ export function useSocketChat() {
       socket.off("room_get_all", roomGetAll);
       socket.off("room_create", roomCreate);
     };
-  }, [init, addMessage, addRoom, username]);
+  }, [init, addMessage, addRoom, data.username]);
 }

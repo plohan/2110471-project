@@ -1,15 +1,15 @@
 import { JSONFile } from "lowdb/node";
 import { Low } from "lowdb";
-import { Room } from "@sendhelp/core";
+import { Room, User } from "@sendhelp/core";
 
 export type DB = {
   rooms: Room[];
-  userColors: Record<string, string>;
+  users: User[];
 };
 
 const db: Low<DB> = new Low(new JSONFile("db.json"), {
   rooms: [],
-  userColors: {} as Record<string, string>,
+  users: [],
 });
 
 db.read().then(() => {

@@ -2,7 +2,7 @@ import { RoomCreate, type MessageCreate } from "@sendhelp/core";
 import { Server } from "socket.io";
 import express from "express";
 import http from "http";
-import { messageCreate, roomGetAll, roomCreate } from "./usecases";
+import { messageCreate, roomGetAll, roomCreate, userCheck } from "./usecases";
 
 const app = express();
 
@@ -18,6 +18,8 @@ const io = new Server(server, {
 io.on("connection", async (socket) => {
   socket.on("message_create", async (body: MessageCreate) => {
     const username = socket.handshake.auth.username;
+    userCheck(username);
+
     console.log(`[${username}](${body.roomName}): ${body.content}`);
     const message = await messageCreate(body, username);
     io.emit("message_create", message);

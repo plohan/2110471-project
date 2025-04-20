@@ -19,3 +19,8 @@ export type Room = {
 export type RoomCreate = {
   name: string;
 };
+
+export type User = {
+  username: string;
+  color: string;
+}

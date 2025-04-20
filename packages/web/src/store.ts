@@ -11,7 +11,7 @@ interface State {
 }
 
 export const useData = create<State>((set) => ({
-  username: randomUsername(),
+  username: "",
   rooms: [],
   init: (rooms: Room[]) => {
     set({ rooms });

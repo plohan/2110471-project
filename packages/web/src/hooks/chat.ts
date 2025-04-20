@@ -2,14 +2,21 @@ import { useEffect } from "react";
 import { getSocket } from "../socket";
 import { useData } from "../store";
 import type { Message, Room } from "@sendhelp/core";
+import { randomUsername } from "../lib/utils";
 
 export function useSocketChat() {
   const data = useData();
   const { init, addMessage, addRoom } = data;
 
   useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (!storedUsername) {
+      const newName = randomUsername();
+      localStorage.setItem("username", newName);
+    }
+
     const socket = getSocket({
-      username: data.username,
+      username: storedUsername || randomUsername(),
     });
 
     const roomGetAll = (msg: Room[]) => {

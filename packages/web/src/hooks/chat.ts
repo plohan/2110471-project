@@ -6,18 +6,11 @@ import { randomUsername } from "../lib/utils";
 
 export function useSocketChat() {
   const data = useData();
-  const { init, addMessage, addRoom } = data;
+  const { init, addMessage, addRoom, username } = data;
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    if (!storedUsername) {
-      const newName = randomUsername();
-      localStorage.setItem("username", newName);
-    }
-
-    const socket = getSocket({
-      username: storedUsername || randomUsername(),
-    });
+    if (!username) return;
+    const socket = getSocket({ username });
 
     const roomGetAll = (msg: Room[]) => {
       init(msg);
@@ -42,5 +35,5 @@ export function useSocketChat() {
       socket.off("room_get_all", roomGetAll);
       socket.off("room_create", roomCreate);
     };
-  }, [init, addMessage, addRoom]);
+  }, [init, addMessage, addRoom, username]);
 }

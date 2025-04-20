@@ -10,6 +10,7 @@ interface State {
   addRoom: (room: Room) => void;
   connectedUsers: string[];
   setConnectedUsers: (users: string[]) => void;
+  directMessage: (to: string, from: string) => void;
 }
 
 export const useData = create<State>((set) => ({
@@ -30,6 +31,10 @@ export const useData = create<State>((set) => ({
     }),
   connectedUsers: [],
   setConnectedUsers: (users) => set({ connectedUsers: users }),
+  directMessage: (to: string, from: string) => {
+    console.log(`Direct message from ${from} to ${to}`);
+    // Extend this logic when you want to store or render DMs in frontend
+  },
 }));
 
 function addMessage(rooms: Room[], message: Message): Room[] {

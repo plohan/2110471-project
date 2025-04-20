@@ -15,9 +15,21 @@ const io = new Server(server, {
   },
 });
 
+const users = new Map();
+
 io.on("connection", async (socket) => {
+  const username = socket.handshake.auth.username;
+  users.set(socket.id, username);
+
+  io.emit("users_update", Array.from(users.values())); // broadcast
+
+  socket.on("disconnect", () => {
+    users.delete(socket.id);
+    io.emit("users_update", Array.from(users.values()));
+  });
+
   socket.on("message_create", async (body: MessageCreate) => {
-    const username = socket.handshake.auth.username;
+    
     userCheck(username);
 
     console.log(`[${username}](${body.roomName}): ${body.content}`);

@@ -50,7 +50,7 @@ export function MessageList(props: MessageListProps) {
     <>
       <div className="p-4 border-b border-[#232428] shadow-sm">
         <div className="flex items-center">
-          <span className="text-xl font-bold"># general</span>
+        <span className="text-xl font-bold">#{activeRoom ?? "Text channel"}</span>
         </div>
       </div>
 

@@ -51,7 +51,7 @@ export function DirectMessageList(props: DirectMessageListProps) {
     <>
       <div className="p-4 border-b border-[#232428] shadow-sm">
         <div className="flex items-center">
-        <span className="text-xl font-bold">#{other ?? "Text channel"}</span>
+        <span className="text-xl font-bold">DM: {other ?? "Text channel"}</span>
         </div>
       </div>
 

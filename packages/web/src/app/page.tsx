@@ -39,8 +39,20 @@ export default function Home() {
         />
       )}
       <div className="flex flex-col">
-        <RoomSidebar activeRoom={activeRoom} setActiveRoom={setActiveRoom} />
-        <ConnectedUserSidebar other={other} setOther={setOther} />
+        <RoomSidebar
+          activeRoom={activeRoom}
+          setActiveRoom={(room) => {
+            setActiveRoom(room);
+            setOther(null);
+          }}
+        />
+        <ConnectedUserSidebar
+          other={other}
+          setOther={(user) => {
+            setOther(user);
+            setActiveRoom(null);
+          }}
+        />
       </div>
       <main className="flex-1 flex flex-col">
         {other ? (

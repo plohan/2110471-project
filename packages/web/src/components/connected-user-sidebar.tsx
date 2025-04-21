@@ -1,20 +1,9 @@
 "use client";
 
-import { Hash, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useData } from "@/store";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
-  DialogTrigger,
-} from "./ui/dialog";
-import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
-import { Input } from "./ui/input";
-import { getSocket, socketRoomCreate } from "@/socket";
+import { useEffect } from "react";
+import { getSocket } from "@/socket";
 
 interface ConnectedUserSidebarProps {
   other: string | null;
@@ -48,9 +37,15 @@ export function ConnectedUserSidebar(props: ConnectedUserSidebarProps) {
           {data.connectedUsers.map((user, index) => (
             <button
               key={index}
-              onClick={() => setOther(user)}
+              onClick={() => {
+                if (user !== data.username) setOther(user);
+              }}
+              disabled={user === data.username}
               className={cn(
-                "block w-full text-left px-2 py-1 rounded hover:bg-[#40444b]",
+                "block w-full text-left px-2 py-1 rounded",
+                user === data.username
+                  ? "cursor-not-allowed text-gray-400"
+                  : "hover:bg-[#40444b]",
                 other === user && "bg-[#5865f2] text-white"
               )}
             >

@@ -7,7 +7,7 @@ import { getSocket } from "@/socket";
 
 interface ConnectedUserSidebarProps {
   other: string | null;
-  setOther: (room: string) => void;
+  setOther: (user: string) => void;
 }
 
 export function ConnectedUserSidebar(props: ConnectedUserSidebarProps) {
@@ -30,7 +30,7 @@ export function ConnectedUserSidebar(props: ConnectedUserSidebarProps) {
   }, [data.username]);
 
   return (
-    <div className="w-60 bg-[#2f3136] flex flex-col">
+    <div className="w-60 bg-[#2f3136] flex flex-col h-full">
       <div className="flex-1 overflow-y-auto p-2">
         <h3 className="text-lg font-bold">Connected Users</h3>
         <div>

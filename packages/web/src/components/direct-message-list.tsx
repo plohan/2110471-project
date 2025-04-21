@@ -24,10 +24,7 @@ export function DirectMessageList(props: DirectMessageListProps) {
       return;
     }
     const userPair = data.directMessages[getPairKey(data.username, other)]
-    if (!userPair) {
-      return;
-    }
-    setDirectMessages(userPair);
+    setDirectMessages(userPair || []);
   }, [other, data.directMessages, data.username]);
   const [newDirectMessage, setNewDirectMessage] = useState("");
 

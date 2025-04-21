@@ -1,8 +1,8 @@
-import { RoomCreate, type MessageCreate } from "@sendhelp/core";
+import { DirectMessageCreate, RoomCreate, type MessageCreate } from "@sendhelp/core";
 import { Server } from "socket.io";
 import express from "express";
 import http from "http";
-import { messageCreate, roomGetAll, roomCreate, findOrCreateUser, directMessage } from "./usecases";
+import { messageCreate, roomGetAll, roomCreate, findOrCreateUser, directMessage, directMessageGetAll } from "./usecases";
 
 const app = express();
 
@@ -49,28 +49,18 @@ io.on("connection", async (socket) => {
     const username = socket.handshake.auth.username;
     console.log(`[${username}]: ready`);
     const allRooms = await roomGetAll();
+    const allDirectMessages = await directMessageGetAll();
     socket.emit("room_get_all", allRooms);
+    socket.emit("direct_message_get_all", allDirectMessages);
   });
 
-  socket.on("direct_message", async ({ to, content }) => {
-    const from = socket.data.username;
-    const message = await directMessage(to, content, from)
-  
-    // Emit to the receiver if they are online
-    let receiverSocketId: string | undefined;
-    for (const [socketId, name] of users.entries()) {
-      if (name === to) {
-        receiverSocketId = socketId;
-        break;
-      }
-    }
+  socket.on("direct_message", async (body: DirectMessageCreate) => {
 
-    if (receiverSocketId) {
-      const receiverSocket = io.sockets.sockets.get(receiverSocketId);
-      if (receiverSocket) {
-        receiverSocket.emit("direct_message", message);
-      }
-    }
+    await findOrCreateUser(username);
+
+    const message = await directMessage(body, username)
+  
+    socket.emit("direct_message", message);
   });
 });
 

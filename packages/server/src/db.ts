@@ -7,13 +7,13 @@ const filepath = process.env.DATA_DIR ?? "db.json";
 export type DB = {
   rooms: Room[];
   users: User[];
-  directMessages: DirectMessage[];
+  directMessagePair: Record<string, DirectMessage[]>;
 };
 
 const db: Low<DB> = new Low(new JSONFile(filepath), {
   rooms: [],
   users: [],
-  directMessages: [],
+  directMessagePair: {},
 });
 
 console.log(`Loading database from ${filepath}`);

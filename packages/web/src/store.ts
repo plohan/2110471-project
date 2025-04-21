@@ -6,12 +6,13 @@ interface State {
   setUsername: (username: string) => void;
   rooms: Room[];
   init: (rooms: Room[]) => void;
-  userPairs: Record<string, DirectMessage[]>;
+  initDirectMessage: (directMessages: Record<string, DirectMessage[]>) => void;
+  directMessages: Record<string, DirectMessage[]>;
   addMessage: (message: Message) => void;
   addRoom: (room: Room) => void;
   connectedUsers: string[];
   setConnectedUsers: (users: string[]) => void;
-  addDirectMessage: (from: string, to: string, content: string) => void;
+  addDirectMessage: (directMessage: DirectMessage) => void;
 }
 
 export const useData = create<State>((set) => ({
@@ -20,6 +21,9 @@ export const useData = create<State>((set) => ({
   rooms: [],
   init: (rooms: Room[]) => {
     set({ rooms });
+  },
+  initDirectMessage: (directMessages: Record<string, DirectMessage[]>) => {
+    set({ directMessages });
   },
   addMessage: (message: Message) =>
     set((state) => {
@@ -32,22 +36,23 @@ export const useData = create<State>((set) => ({
     }),
   connectedUsers: [],
   setConnectedUsers: (users) => set({ connectedUsers: users }),
-  userPairs: {},
-  addDirectMessage: (from, to, content) => {
-    const key = getPairKey(from, to);
+  directMessages: {},
+  addDirectMessage: (directMessage: DirectMessage) => {
+    const key = getPairKey(directMessage.from, directMessage.to);
     set((state) => {
       const newMessage: DirectMessage = {
         id: Date.now(),
-        from,
-        to,
-        content,
+        from: directMessage.from,
+        to: directMessage.to,
+        content: directMessage.content,
+        color: directMessage.color 
       };
-      const updatedMessages = state.userPairs[key]
-        ? [...state.userPairs[key], newMessage]
+      const updatedMessages = state.directMessages[key]
+        ? [...state.directMessages[key], newMessage]
         : [newMessage];
       return {
-        userPairs: {
-          ...state.userPairs,
+        directMessages: {
+          ...state.directMessages,
           [key]: updatedMessages,
         },
       };

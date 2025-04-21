@@ -1,4 +1,4 @@
-import { MessageCreate, RoomCreate } from "@sendhelp/core";
+import { MessageCreate, RoomCreate, DirectMessageCreate } from "@sendhelp/core";
 import { io, Socket } from "socket.io-client";
 
 let socket: Socket | null = null;
@@ -41,4 +41,12 @@ export function socketMessageCreate(body: MessageCreate) {
     return;
   }
   socket.emit("message_create", body);
+}
+
+export function socketDirectMessageCreate(body: DirectMessageCreate) {
+  if (!socket) {
+    console.error("Socket not initialized");
+    return;
+  }
+  socket.emit("direct_message", body);
 }

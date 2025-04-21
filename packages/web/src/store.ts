@@ -1,16 +1,17 @@
 import { create } from "zustand";
-import type { Message, Room } from "@sendhelp/core";
+import type { Message, Room, DirectMessage } from "@sendhelp/core";
 
 interface State {
   username: string | null;
   setUsername: (username: string) => void;
   rooms: Room[];
   init: (rooms: Room[]) => void;
+  userPairs: Record<string, DirectMessage[]>;
   addMessage: (message: Message) => void;
   addRoom: (room: Room) => void;
   connectedUsers: string[];
   setConnectedUsers: (users: string[]) => void;
-  directMessage: (to: string, from: string) => void;
+  addDirectMessage: (from: string, to: string, content: string) => void;
 }
 
 export const useData = create<State>((set) => ({
@@ -31,9 +32,26 @@ export const useData = create<State>((set) => ({
     }),
   connectedUsers: [],
   setConnectedUsers: (users) => set({ connectedUsers: users }),
-  directMessage: (to: string, from: string) => {
-    console.log(`Direct message from ${from} to ${to}`);
-    // Extend this logic when you want to store or render DMs in frontend
+  userPairs: {},
+  addDirectMessage: (from, to, content) => {
+    const key = getPairKey(from, to);
+    set((state) => {
+      const newMessage: DirectMessage = {
+        id: Date.now(),
+        from,
+        to,
+        content,
+      };
+      const updatedMessages = state.userPairs[key]
+        ? [...state.userPairs[key], newMessage]
+        : [newMessage];
+      return {
+        userPairs: {
+          ...state.userPairs,
+          [key]: updatedMessages,
+        },
+      };
+    });
   },
 }));
 
@@ -46,4 +64,8 @@ function addMessage(rooms: Room[], message: Message): Room[] {
     room.messages.push(message);
   }
   return rooms;
+}
+
+function getPairKey(user1: string, user2: string): string {
+  return [user1, user2].sort().join("|");
 }

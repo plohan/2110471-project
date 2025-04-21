@@ -2,7 +2,7 @@ import { RoomCreate, type MessageCreate } from "@sendhelp/core";
 import { Server } from "socket.io";
 import express from "express";
 import http from "http";
-import { messageCreate, roomGetAll, roomCreate, userCheck } from "./usecases";
+import { messageCreate, roomGetAll, roomCreate, findOrCreateUser } from "./usecases";
 
 const app = express();
 
@@ -19,18 +19,18 @@ const users = new Map();
 
 io.on("connection", async (socket) => {
   const username = socket.handshake.auth.username;
-  users.set(socket.id, username);
+  users.set(username, socket.id);
 
-  io.emit("users_update", Array.from(users.values())); // broadcast
+  io.emit("user_update", Array.from(users.keys())); // broadcast
 
   socket.on("disconnect", () => {
-    users.delete(socket.id);
-    io.emit("users_update", Array.from(users.values()));
+    users.delete(username);
+    io.emit("user_update", Array.from(users.keys()));
   });
 
   socket.on("message_create", async (body: MessageCreate) => {
     
-    userCheck(username);
+    await findOrCreateUser(username);
 
     console.log(`[${username}](${body.roomName}): ${body.content}`);
     const message = await messageCreate(body, username);

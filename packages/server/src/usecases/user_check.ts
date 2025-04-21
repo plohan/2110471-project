@@ -2,7 +2,7 @@ import { User } from "@sendhelp/core";
 import db from "../db";
 import { getRandomColor } from "../lib/color";
 
-export async function userCheck(username: string) {
+export async function findOrCreateUser(username: string) {
     const user = db.data.users.find((user) => user.username == username)
 
     if (!user) {

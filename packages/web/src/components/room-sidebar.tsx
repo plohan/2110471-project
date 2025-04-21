@@ -1,7 +1,7 @@
 "use client";
 
 import { Hash, Plus } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@sendhelp/core";
 import { useData } from "@/store";
 import {
   Dialog,
@@ -29,18 +29,17 @@ export function RoomSidebar(props: RoomSidebarProps) {
 
   useEffect(() => {
     function handleUsersUpdate(users: string[]) {
-      console.log(users);
       setConnectedUsers(users);
     }
 
     if (!data.username) return;
     const socket = getSocket({ username: data.username });
 
-    socket.on("users_update", handleUsersUpdate);
+    socket.on("user_update", handleUsersUpdate);
 
-  return () => {
-    socket.off("users_update", handleUsersUpdate);
-  };
+    return () => {
+      socket.off("user_update", handleUsersUpdate);
+    };
   }, [data.username]);
 
   function handleSendMessage(e: React.FormEvent) {
@@ -113,11 +112,11 @@ export function RoomSidebar(props: RoomSidebarProps) {
       </div>
       <div className="p-2">
         <h3 className="text-lg font-bold">Connected Users</h3>
-        <ul>
+        <div>
           {connectedUsers.map((user, index) => (
             <li key={index}>{user}</li>
           ))}
-        </ul>
+        </div>
       </div>
       <div className="mt-auto p-3 bg-[#292b2f] flex items-center">
         <div className="w-8 h-8 rounded-full bg-[#5865f2] flex items-center justify-center text-white font-semibold">

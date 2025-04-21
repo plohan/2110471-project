@@ -9,9 +9,8 @@ export interface SocketOption {
 
 export function getSocket({ username }: SocketOption) {
   if (!socket) {
-    // const url = process.env.NEXT_PUBLIC_SERVER_URL;
-    const url = "http://localhost:8000";
-    if (url) {
+    const url = process.env.NEXT_PUBLIC_SERVER_URL;
+    if (url && url !== "") {
       socket = io(url, {
         auth: {
           username,

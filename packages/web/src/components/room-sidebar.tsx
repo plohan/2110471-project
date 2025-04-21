@@ -1,7 +1,7 @@
 "use client";
 
 import { Hash, Plus } from "lucide-react";
-import { cn } from "@sendhelp/core";
+import { cn } from "@/lib/utils";
 import { useData } from "@/store";
 import {
   Dialog,
@@ -25,11 +25,10 @@ export function RoomSidebar(props: RoomSidebarProps) {
   const data = useData();
   const { activeRoom, setActiveRoom } = props;
   const [newRoomName, setNewRoomName] = useState<string>("");
-  const [connectedUsers, setConnectedUsers] = useState<string[]>([]);
 
   useEffect(() => {
     function handleUsersUpdate(users: string[]) {
-      setConnectedUsers(users);
+      data.setConnectedUsers(users);
     }
 
     if (!data.username) return;
@@ -113,7 +112,7 @@ export function RoomSidebar(props: RoomSidebarProps) {
       <div className="p-2">
         <h3 className="text-lg font-bold">Connected Users</h3>
         <div>
-          {connectedUsers.map((user, index) => (
+          {data.connectedUsers.map((user, index) => (
             <li key={index}>{user}</li>
           ))}
         </div>

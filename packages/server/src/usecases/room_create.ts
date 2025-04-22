@@ -10,6 +10,9 @@ export async function roomCreate(
     return null;
   }
   const user = db.data.users.find((user) => user.username === creatorName);
+  if (!user) {
+    return null;
+  }
   const room = {
     name,
     messages: [],

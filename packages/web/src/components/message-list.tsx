@@ -19,6 +19,7 @@ export function MessageList(props: MessageListProps) {
   const { activeRoom } = props;
   const [messages, setMessages] = useState<Message[]>([]);
   const data = useData();
+  const [placeholder, setPlaceholder] = useState<string>();
   useEffect(() => {
     if (!activeRoom) {
       return;
@@ -45,6 +46,20 @@ export function MessageList(props: MessageListProps) {
     socketMessageCreate(message);
     setNewMessage("");
   };
+
+  useEffect(() => {
+    const room = data.rooms.find((room) => room.name === activeRoom);
+    if (!room) return;
+
+    const isMember = room.messages.some(
+      (message) => message.authorName === data.username,
+    );
+
+    const placeholder = isMember
+      ? `Message #${activeRoom}`
+      : `Message #${activeRoom} to join the room`;
+    setPlaceholder(placeholder);
+  }, [data, activeRoom]);
 
   return (
     <div className="flex flex-col grow h-full">
@@ -82,7 +97,7 @@ export function MessageList(props: MessageListProps) {
           <Input
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Message #general"
+            placeholder={placeholder}
             className="bg-[#40444b] border-none text-gray-100 pr-10"
           />
           <Button

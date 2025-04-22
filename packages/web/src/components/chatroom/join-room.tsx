@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 import { useData } from "@/store";
 import { socketJoinRoom } from "@/socket";
 
-interface JoinRoomPorps {
+interface JoinRoomProps {
   activeRoom: string;
 }
 
-export function JoinRoom(props: JoinRoomPorps) {
+export function JoinRoom(props: JoinRoomProps) {
   const { activeRoom } = props;
   const data = useData();
   const [isMember, setIsMember] = useState(false);

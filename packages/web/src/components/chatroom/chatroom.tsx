@@ -8,11 +8,11 @@ import { MessageList } from "./message-list";
 import { RoomMembers } from "./room-members";
 import { JoinRoom } from "./join-room";
 
-interface ChatroomPorps {
+interface ChatroomProps {
   activeRoom: string;
 }
 
-export function Chatroom(props: ChatroomPorps) {
+export function Chatroom(props: ChatroomProps) {
   const { activeRoom } = props;
   const data = useData();
   const [isMember, setIsMember] = useState(false);

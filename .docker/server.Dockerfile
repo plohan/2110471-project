@@ -42,4 +42,4 @@ RUN set -eux; \
 
 COPY --from=build /app/packages/server/dist/index.js /app/index.js
 EXPOSE 8000
-CMD [ "gosu", "nobody", "node", "/app/index.js" ]
+CMD [ "node", "/app/index.js" ]

@@ -7,7 +7,7 @@ on:
     - main
 
 env:
-  IMAGE_NAME: ghcr.io/plohan/network-project-chat-proxy
+  IMAGE_NAME: ghcr.io/plohan/network-project-chat-server
 
 jobs:
   build:

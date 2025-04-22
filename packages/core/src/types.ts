@@ -23,18 +23,17 @@ export type RoomCreate = {
 export type User = {
   username: string;
   color: string;
-}
+};
 
 export type DirectMessage = {
   id: number;
-  from: string; // sender username or user ID
-  to: string;   // receiver username or user ID
+  from: string;
+  to: string;
   content: string;
   color: string;
-};  
+};
 
 export type DirectMessageCreate = {
-  key: string;
   content: string;
-  other: string;
+  to: string;
 };

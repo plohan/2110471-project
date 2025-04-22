@@ -2,16 +2,36 @@
 
 import type React from "react";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useData } from "@/store";
-import { timestampString } from "@/lib/utils";
+import type { User, Room } from "@sendhelp/core";
 
 interface RoomMembersProps {
   activeRoom: string | null;
 }
 
 export function RoomMembers(props: RoomMembersProps) {
-  const roomMembers = ["a", "b", "c"];
+  const { activeRoom } = props;
+  const data = useData();
+  const [roomMembers, setRoomMembers] = useState<User[]>([]);
+
+  useEffect(() => {
+    if (!activeRoom) return;
+
+    const room = data.rooms.find((room) => room.name === activeRoom);
+    if (!room) return;
+
+    const members = room.messages.reduce((m, message) => {
+      if (m.has(message.authorName)) return m;
+      m.set(message.authorName, {
+        username: message.authorName,
+        color: message.color,
+      });
+      return m;
+    }, new Map());
+    const memberArray = Array.from(members.values());
+    setRoomMembers(memberArray);
+  }, [activeRoom, data]);
 
   return (
     <div className="flex flex-col bg-[#2f3136] h-full">
@@ -23,8 +43,12 @@ export function RoomMembers(props: RoomMembersProps) {
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {roomMembers.map((roomMember) => (
-          <div key={roomMember} className="flex group">
-            {roomMember}
+          <div
+            key={roomMember.username}
+            className="flex group"
+            style={{ color: roomMember.color }}
+          >
+            {roomMember.username}
           </div>
         ))}
       </div>

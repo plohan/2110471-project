@@ -69,7 +69,6 @@ io.on("connection", async (socket) => {
 
   socket.on("direct_message", async (body: DirectMessageCreate) => {
     await findOrCreateUser(username);
-    console.log(body);
     const recipient = await findUser(body.to);
 
     if (!recipient) {

@@ -1,7 +1,8 @@
-import {
+import type {
   DirectMessageCreate,
+  RoomJoin,
   RoomCreate,
-  type MessageCreate,
+  MessageCreate,
 } from "@sendhelp/core";
 import { Server } from "socket.io";
 import express from "express";
@@ -14,6 +15,7 @@ import {
   directMessage,
   directMessageGetAll,
   findUser,
+  roomJoin,
 } from "./usecases";
 
 const app = express();
@@ -51,15 +53,22 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("room_create", async (body: RoomCreate) => {
-    const room = await roomCreate(body);
+    const room = await roomCreate(body, username);
     if (!room) {
       return;
     }
     io.emit("room_create", room);
   });
 
+  socket.on("room_join", async (body: RoomJoin) => {
+    const newMember = await roomJoin(body, username);
+    if (!newMember) {
+      return;
+    }
+    io.emit("room_update_new_member", newMember);
+  });
+
   socket.on("ready", async () => {
-    const username = socket.handshake.auth.username;
     console.log(`[${username}]: ready`);
     const allRooms = await roomGetAll();
     const allDirectMessages = await directMessageGetAll();

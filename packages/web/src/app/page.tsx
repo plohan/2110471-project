@@ -1,6 +1,5 @@
 "use client";
 
-import { MessageList } from "@/components/message-list";
 import { DirectMessageList } from "@/components/direct-message-list";
 import { RoomSidebar } from "@/components/room-sidebar";
 import { ConnectedUserSidebar } from "@/components/connected-user-sidebar";
@@ -8,7 +7,7 @@ import { useSocketChat } from "@/hooks/chat";
 import { useState, useEffect } from "react";
 import { useData } from "@/store";
 import { UsernamePrompt } from "@/components/username-prompt";
-import { RoomMembers } from "@/components/room-members";
+import { Chatroom } from "@/components/chatroom/chatroom";
 
 export default function Home() {
   const [activeRoom, setActiveRoom] = useState<string | null>(null);
@@ -33,7 +32,6 @@ export default function Home() {
         <UsernamePrompt
           onSubmit={(name) => {
             localStorage.setItem("username", name);
-            console.log("Name", name);
             data.setUsername(name);
             setShowUsernamePrompt(false);
           }}
@@ -58,12 +56,9 @@ export default function Home() {
       <main className="flex-1 flex flex-col">
         {other ? (
           <DirectMessageList to={other} />
-        ) : (
-          <div className="flex h-full">
-            <MessageList activeRoom={activeRoom} />
-            <RoomMembers activeRoom={activeRoom} />
-          </div>
-        )}
+        ) : activeRoom ? (
+          <Chatroom activeRoom={activeRoom} />
+        ) : null}
       </main>
     </div>
   );

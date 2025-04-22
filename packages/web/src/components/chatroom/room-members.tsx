@@ -2,12 +2,12 @@
 
 import type React from "react";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useData } from "@/store";
 import type { User, Room } from "@sendhelp/core";
 
 interface RoomMembersProps {
-  activeRoom: string | null;
+  activeRoom: string;
 }
 
 export function RoomMembers(props: RoomMembersProps) {
@@ -21,16 +21,7 @@ export function RoomMembers(props: RoomMembersProps) {
     const room = data.rooms.find((room) => room.name === activeRoom);
     if (!room) return;
 
-    const members = room.messages.reduce((m, message) => {
-      if (m.has(message.authorName)) return m;
-      m.set(message.authorName, {
-        username: message.authorName,
-        color: message.color,
-      });
-      return m;
-    }, new Map());
-    const memberArray = Array.from(members.values());
-    setRoomMembers(memberArray);
+    setRoomMembers(room.members);
   }, [activeRoom, data]);
 
   return (

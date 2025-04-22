@@ -1,7 +1,12 @@
 import { useEffect } from "react";
 import { getSocket } from "../socket";
 import { useData } from "../store";
-import type { DirectMessage, Message, Room } from "@sendhelp/core";
+import type {
+  DirectMessage,
+  Message,
+  Room,
+  RoomUpdateNewMember,
+} from "@sendhelp/core";
 
 export function useSocketChat() {
   const data = useData();
@@ -12,6 +17,7 @@ export function useSocketChat() {
     username,
     addDirectMessage,
     initDirectMessage,
+    updateRoomNewMember,
   } = data;
 
   useEffect(() => {
@@ -38,20 +44,26 @@ export function useSocketChat() {
       addDirectMessage(msg);
     };
 
+    const roomUpdateNewMember = (msg: RoomUpdateNewMember) => {
+      updateRoomNewMember(msg);
+    };
+
+    socket.on("direct_message", directMessageCreate);
+    socket.on("direct_message_get_all", directMessageGetAll);
+    socket.on("room_update_new_member", roomUpdateNewMember);
     socket.on("message_create", messageCreate);
     socket.on("room_get_all", roomGetAll);
-    socket.on("direct_message_get_all", directMessageGetAll);
     socket.on("room_create", roomCreate);
-    socket.on("direct_message", directMessageCreate);
 
     socket.emit("ready");
 
     return () => {
+      socket.off("direct_message", directMessageCreate);
+      socket.off("direct_message_get_all", directMessageGetAll);
+      socket.off("room_update_new_member", roomUpdateNewMember);
       socket.off("message_create", messageCreate);
       socket.off("room_get_all", roomGetAll);
       socket.off("room_create", roomCreate);
-      socket.off("direct_message_get_all", directMessageGetAll);
-      socket.off("direct_message", directMessageCreate);
     };
   }, [init, addMessage, addRoom, data.username, addDirectMessage]);
 }

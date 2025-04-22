@@ -50,3 +50,11 @@ export function socketDirectMessageCreate(body: DirectMessageCreate) {
   }
   socket.emit("direct_message", body);
 }
+
+export function socketJoinRoom(roomName: string) {
+  if (!socket) {
+    console.error("Socket not initialized");
+    return;
+  }
+  socket.emit("room_join", { roomName });
+}

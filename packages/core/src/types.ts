@@ -8,6 +8,7 @@ export type Message = {
   content: string;
   roomName: string;
   authorName: string;
+  color: string;
 };
 
 export type Room = {
@@ -18,3 +19,8 @@ export type Room = {
 export type RoomCreate = {
   name: string;
 };
+
+export type User = {
+  username: string;
+  color: string;
+}

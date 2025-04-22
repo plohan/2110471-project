@@ -1,7 +1,7 @@
 "use client";
 
 import { Hash, Plus } from "lucide-react";
-import { cn, randomUsername } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { useData } from "@/store";
 import {
   Dialog,
@@ -14,7 +14,7 @@ import {
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
-import { socketRoomCreate } from "@/socket";
+import { getSocket, socketRoomCreate } from "@/socket";
 
 interface RoomSidebarProps {
   activeRoom: string | null;
@@ -27,10 +27,19 @@ export function RoomSidebar(props: RoomSidebarProps) {
   const [newRoomName, setNewRoomName] = useState<string>("");
 
   useEffect(() => {
-    if (!data.username) {
-      data.setUsername(randomUsername());
+    function handleUsersUpdate(users: string[]) {
+      data.setConnectedUsers(users);
     }
-  }, []);
+
+    if (!data.username) return;
+    const socket = getSocket({ username: data.username });
+
+    socket.on("user_update", handleUsersUpdate);
+
+    return () => {
+      socket.off("user_update", handleUsersUpdate);
+    };
+  }, [data.username]);
 
   function handleSendMessage(e: React.FormEvent) {
     e.preventDefault();
@@ -100,7 +109,14 @@ export function RoomSidebar(props: RoomSidebarProps) {
           ))}
         </div>
       </div>
-
+      <div className="p-2">
+        <h3 className="text-lg font-bold">Connected Users</h3>
+        <div>
+          {data.connectedUsers.map((user, index) => (
+            <li key={index}>{user}</li>
+          ))}
+        </div>
+      </div>
       <div className="mt-auto p-3 bg-[#292b2f] flex items-center">
         <div className="w-8 h-8 rounded-full bg-[#5865f2] flex items-center justify-center text-white font-semibold">
           U

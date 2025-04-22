@@ -1,15 +1,17 @@
 import { JSONFile } from "lowdb/node";
 import { Low } from "lowdb";
-import { Room } from "@sendhelp/core";
+import { Room, User } from "@sendhelp/core";
 
 const filepath = process.env.DATA_DIR ?? "db.json";
 
 export type DB = {
   rooms: Room[];
+  users: User[];
 };
 
 const db: Low<DB> = new Low(new JSONFile(filepath), {
   rooms: [],
+  users: [],
 });
 
 console.log(`Loading database from ${filepath}`);

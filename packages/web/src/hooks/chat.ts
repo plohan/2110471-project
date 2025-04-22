@@ -2,18 +2,15 @@ import { useEffect } from "react";
 import { getSocket } from "../socket";
 import { useData } from "../store";
 import type { Message, Room } from "@sendhelp/core";
+import { randomUsername } from "../lib/utils";
 
 export function useSocketChat() {
   const data = useData();
-  const { init, addMessage, addRoom } = data;
+  const { init, addMessage, addRoom, username } = data;
 
   useEffect(() => {
-    if (!data.username) {
-      return;
-    }
-    const socket = getSocket({
-      username: data.username,
-    });
+    if (!username) return;
+    const socket = getSocket({ username });
 
     const roomGetAll = (msg: Room[]) => {
       init(msg);

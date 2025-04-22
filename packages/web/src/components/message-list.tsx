@@ -59,7 +59,10 @@ export function MessageList(props: MessageListProps) {
           <div key={message.id} className="flex group">
             <div>
               <div className="flex items-baseline">
-                <span className="font-medium text-white mr-2">
+              <span
+                  className="font-medium mr-2"
+                  style={{ color: message.color || "#ffffff" }}
+                >
                   {message.authorName || "<Anonymous>"}
                 </span>
                 <span className="text-xs text-gray-400">

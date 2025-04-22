@@ -7,6 +7,10 @@ export async function messageCreate(
 ): Promise<Message> {
   const { roomName, content } = messageCreate;
   const room = db.data.rooms.find((room) => room.name === roomName);
+  const user = db.data.users.find((user) => user.username === authorName)
+  if (!user) {
+    throw new Error(`User with username "${authorName}" not found.`);
+  }
   const id = new Date().getTime();
 
   const message = {
@@ -14,6 +18,7 @@ export async function messageCreate(
     content,
     roomName,
     authorName,
+    color: user.color,
   };
   room.messages.push(message);
 

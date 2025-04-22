@@ -47,7 +47,7 @@ export function MessageList(props: MessageListProps) {
   };
 
   return (
-    <>
+    <div className="flex flex-col grow h-full">
       <div className="p-4 border-b border-[#232428] shadow-sm">
         <div className="flex items-center">
           <span className="text-xl font-bold">
@@ -56,7 +56,7 @@ export function MessageList(props: MessageListProps) {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 grow overflow-y-auto p-4 space-y-4">
         {messages.map((message) => (
           <div key={message.id} className="flex group">
             <div>
@@ -65,7 +65,7 @@ export function MessageList(props: MessageListProps) {
                   className="font-medium mr-2"
                   style={{ color: message.color || "#ffffff" }}
                 >
-                  {message.authorName || "<Anonymous>"}
+                  {message.authorName}
                 </span>
                 <span className="text-xs text-gray-400">
                   {timestampString(new Date(message.id))}
@@ -94,6 +94,6 @@ export function MessageList(props: MessageListProps) {
           </Button>
         </form>
       </div>
-    </>
+    </div>
   );
 }

@@ -9,7 +9,7 @@ export function timestampString(d: Date): string {
   const now = new Date();
   const diff = now.getDate() - d.getDate();
   if (diff < 24 * 60 * 60 * 1000) {
-    return `${d.getHours()}:${d.getMinutes()}`;
+    return `${d.getHours().toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
   } else {
     return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
   }

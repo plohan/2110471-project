@@ -45,16 +45,9 @@ export const useData = create<State>((set) => ({
   addDirectMessage: (directMessage: DirectMessage) => {
     const key = getPairKey(directMessage.from, directMessage.to);
     set((state) => {
-      const newMessage: DirectMessage = {
-        id: Date.now(),
-        from: directMessage.from,
-        to: directMessage.to,
-        content: directMessage.content,
-        color: directMessage.color,
-      };
       const updatedMessages = state.directMessages[key]
-        ? [...state.directMessages[key], newMessage]
-        : [newMessage];
+        ? [...state.directMessages[key], directMessage]
+        : [directMessage];
       return {
         directMessages: {
           ...state.directMessages,

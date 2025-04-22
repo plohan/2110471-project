@@ -8,6 +8,7 @@ import { useSocketChat } from "@/hooks/chat";
 import { useState, useEffect } from "react";
 import { useData } from "@/store";
 import { UsernamePrompt } from "@/components/username-prompt";
+import { RoomMembers } from "@/components/room-members";
 
 export default function Home() {
   const [activeRoom, setActiveRoom] = useState<string | null>(null);
@@ -58,7 +59,10 @@ export default function Home() {
         {other ? (
           <DirectMessageList to={other} />
         ) : (
-          <MessageList activeRoom={activeRoom} />
+          <div className="flex h-full">
+            <MessageList activeRoom={activeRoom} />
+            <RoomMembers activeRoom={activeRoom} />
+          </div>
         )}
       </main>
     </div>

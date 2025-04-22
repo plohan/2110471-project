@@ -109,22 +109,6 @@ export function RoomSidebar(props: RoomSidebarProps) {
           ))}
         </div>
       </div>
-      <div className="p-2">
-        <h3 className="text-lg font-bold">Connected Users</h3>
-        <div>
-          {data.connectedUsers.map((user, index) => (
-            <li key={index}>{user}</li>
-          ))}
-        </div>
-      </div>
-      <div className="mt-auto p-3 bg-[#292b2f] flex items-center">
-        <div className="w-8 h-8 rounded-full bg-[#5865f2] flex items-center justify-center text-white font-semibold">
-          U
-        </div>
-        <div className="ml-2">
-          <p className="text-sm font-medium">{data.username}</p>
-        </div>
-      </div>
     </div>
   );
 }

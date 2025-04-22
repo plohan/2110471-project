@@ -1,7 +1,9 @@
 "use client";
 
 import { MessageList } from "@/components/message-list";
+import { DirectMessageList } from "@/components/direct-message-list";
 import { RoomSidebar } from "@/components/room-sidebar";
+import { ConnectedUserSidebar } from "@/components/connected-user-sidebar";
 import { useSocketChat } from "@/hooks/chat";
 import { useState, useEffect } from "react";
 import { useData } from "@/store"; // Adjust the path if needed
@@ -9,6 +11,7 @@ import { UsernamePrompt } from "@/components/username-prompt";
 
 export default function Home() {
   const [activeRoom, setActiveRoom] = useState<string | null>(null);
+  const [other, setOther] = useState<string | null>(null);
   const [showUsernamePrompt, setShowUsernamePrompt] = useState(false);
   const data = useData();
   
@@ -35,9 +38,28 @@ export default function Home() {
           }}
         />
       )}
-      <RoomSidebar activeRoom={activeRoom} setActiveRoom={setActiveRoom} />
+      <div className="flex flex-col">
+        <RoomSidebar
+          activeRoom={activeRoom}
+          setActiveRoom={(room) => {
+            setActiveRoom(room);
+            setOther(null);
+          }}
+        />
+        <ConnectedUserSidebar
+          other={other}
+          setOther={(user) => {
+            setOther(user);
+            setActiveRoom(null);
+          }}
+        />
+      </div>
       <main className="flex-1 flex flex-col">
-        <MessageList activeRoom={activeRoom} />
+        {other ? (
+          <DirectMessageList other={other} />
+        ) : (
+          <MessageList activeRoom={activeRoom} />
+        )}
       </main>
     </div>
   );

@@ -45,7 +45,7 @@ export const useData = create<State>((set) => ({
         from: directMessage.from,
         to: directMessage.to,
         content: directMessage.content,
-        color: directMessage.color 
+        color: directMessage.color,
       };
       const updatedMessages = state.directMessages[key]
         ? [...state.directMessages[key], newMessage]

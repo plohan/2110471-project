@@ -14,7 +14,7 @@ export default function Home() {
   const [other, setOther] = useState<string | null>(null);
   const [showUsernamePrompt, setShowUsernamePrompt] = useState(false);
   const data = useData();
-  
+
   useEffect(() => {
     if (!data.username) {
       const stored = localStorage.getItem("username");

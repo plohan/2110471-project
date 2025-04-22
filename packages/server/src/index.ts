@@ -1,8 +1,19 @@
-import { DirectMessageCreate, RoomCreate, type MessageCreate } from "@sendhelp/core";
+import {
+  DirectMessageCreate,
+  RoomCreate,
+  type MessageCreate,
+} from "@sendhelp/core";
 import { Server } from "socket.io";
 import express from "express";
 import http from "http";
-import { messageCreate, roomGetAll, roomCreate, findOrCreateUser, directMessage, directMessageGetAll } from "./usecases";
+import {
+  messageCreate,
+  roomGetAll,
+  roomCreate,
+  findOrCreateUser,
+  directMessage,
+  directMessageGetAll,
+} from "./usecases";
 
 const app = express();
 
@@ -29,7 +40,6 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("message_create", async (body: MessageCreate) => {
-    
     await findOrCreateUser(username);
 
     console.log(`[${username}](${body.roomName}): ${body.content}`);
@@ -55,11 +65,10 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("direct_message", async (body: DirectMessageCreate) => {
-
     await findOrCreateUser(username);
 
-    const message = await directMessage(body, username)
-  
+    const message = await directMessage(body, username);
+
     socket.emit("direct_message", message);
   });
 });

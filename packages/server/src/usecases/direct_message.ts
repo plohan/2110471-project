@@ -1,7 +1,10 @@
 import { DirectMessage, DirectMessageCreate } from "@sendhelp/core";
 import db from "../db";
 
-export async function directMessage(directMessageCreate: DirectMessageCreate, from: string): Promise<DirectMessage> {
+export async function directMessage(
+  directMessageCreate: DirectMessageCreate,
+  from: string,
+): Promise<DirectMessage> {
   const user = db.data.users.find((user) => user.username === from);
   const newMessage: DirectMessage = {
     id: new Date().getTime(),

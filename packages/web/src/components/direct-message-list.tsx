@@ -12,7 +12,7 @@ import { socketDirectMessageCreate } from "@/socket";
 import { timestampString, getPairKey } from "@/lib/utils";
 
 interface DirectMessageListProps {
-    other: string | null;
+  other: string | null;
 }
 
 export function DirectMessageList(props: DirectMessageListProps) {
@@ -23,7 +23,7 @@ export function DirectMessageList(props: DirectMessageListProps) {
     if (!other || !data.username) {
       return;
     }
-    const userPair = data.directMessages[getPairKey(data.username, other)]
+    const userPair = data.directMessages[getPairKey(data.username, other)];
     setDirectMessages(userPair || []);
   }, [other, data.directMessages, data.username]);
   const [newDirectMessage, setNewDirectMessage] = useState("");
@@ -48,7 +48,9 @@ export function DirectMessageList(props: DirectMessageListProps) {
     <>
       <div className="p-4 border-b border-[#232428] shadow-sm">
         <div className="flex items-center">
-        <span className="text-xl font-bold">DM: {other ?? "Text channel"}</span>
+          <span className="text-xl font-bold">
+            DM: {other ?? "Text channel"}
+          </span>
         </div>
       </div>
 
@@ -57,7 +59,7 @@ export function DirectMessageList(props: DirectMessageListProps) {
           <div key={message.id} className="flex group">
             <div>
               <div className="flex items-baseline">
-              <span
+                <span
                   className="font-medium mr-2"
                   style={{ color: message.color || "#ffffff" }}
                 >

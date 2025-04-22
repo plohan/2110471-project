@@ -5,7 +5,15 @@ import type { DirectMessage, Message, Room } from "@sendhelp/core";
 
 export function useSocketChat() {
   const data = useData();
-  const { init, addMessage, addRoom, username, addDirectMessage, directMessages, initDirectMessage } = data;
+  const {
+    init,
+    addMessage,
+    addRoom,
+    username,
+    addDirectMessage,
+    directMessages,
+    initDirectMessage,
+  } = data;
 
   useEffect(() => {
     if (!username) return;
@@ -29,11 +37,11 @@ export function useSocketChat() {
 
     const directMessageCreate = (msg: DirectMessage) => {
       addDirectMessage(msg);
-    }
+    };
 
     socket.on("message_create", messageCreate);
     socket.on("room_get_all", roomGetAll);
-    socket.on("direct_message_get_all", directMessageGetAll)
+    socket.on("direct_message_get_all", directMessageGetAll);
     socket.on("room_create", roomCreate);
     socket.on("direct_message", directMessageCreate);
 
@@ -43,8 +51,15 @@ export function useSocketChat() {
       socket.off("message_create", messageCreate);
       socket.off("room_get_all", roomGetAll);
       socket.off("room_create", roomCreate);
-      socket.off("direct_message_get_all", directMessageGetAll)
+      socket.off("direct_message_get_all", directMessageGetAll);
       socket.off("direct_message", directMessageCreate);
     };
-  }, [init, addMessage, addRoom, data.username, addDirectMessage, directMessages]);
+  }, [
+    init,
+    addMessage,
+    addRoom,
+    data.username,
+    addDirectMessage,
+    directMessages,
+  ]);
 }

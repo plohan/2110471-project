@@ -46,7 +46,7 @@ export function ConnectedUserSidebar(props: ConnectedUserSidebarProps) {
                 user === data.username
                   ? "cursor-not-allowed text-gray-400"
                   : "hover:bg-[#40444b]",
-                other === user && "bg-[#5865f2] text-white"
+                other === user && "bg-[#5865f2] text-white",
               )}
             >
               {user}

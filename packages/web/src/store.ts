@@ -1,5 +1,10 @@
 import { create } from "zustand";
-import type { Message, Room, DirectMessage } from "@sendhelp/core";
+import {
+  type Message,
+  type Room,
+  type DirectMessage,
+  getPairKey,
+} from "@sendhelp/core";
 
 interface State {
   username: string | null;
@@ -17,8 +22,10 @@ interface State {
 
 export const useData = create<State>((set) => ({
   username: null,
-  setUsername: (username: string) => set({ username }),
   rooms: [],
+  connectedUsers: [],
+  directMessages: {},
+  setUsername: (username: string) => set({ username }),
   init: (rooms: Room[]) => {
     set({ rooms });
   },
@@ -34,9 +41,7 @@ export const useData = create<State>((set) => ({
     set((state) => {
       return { rooms: [...state.rooms, room] };
     }),
-  connectedUsers: [],
   setConnectedUsers: (users) => set({ connectedUsers: users }),
-  directMessages: {},
   addDirectMessage: (directMessage: DirectMessage) => {
     const key = getPairKey(directMessage.from, directMessage.to);
     set((state) => {
@@ -69,8 +74,4 @@ function addMessage(rooms: Room[], message: Message): Room[] {
     room.messages.push(message);
   }
   return rooms;
-}
-
-function getPairKey(user1: string, user2: string): string {
-  return [user1, user2].sort().join("|");
 }

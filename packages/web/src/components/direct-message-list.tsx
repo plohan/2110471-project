@@ -7,9 +7,9 @@ import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useData } from "@/store";
-import { type DirectMessage } from "@sendhelp/core";
+import { getPairKey, type DirectMessage } from "@sendhelp/core";
 import { socketDirectMessageCreate } from "@/socket";
-import { timestampString, getPairKey } from "@/lib/utils";
+import { timestampString } from "@/lib/utils";
 
 interface DirectMessageListProps {
   other: string | null;

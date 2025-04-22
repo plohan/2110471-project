@@ -94,15 +94,3 @@ const commonNouns = [
   "xylophone",
   "zebra",
 ];
-
-function pick<T>(x: T[]): T {
-  return x[Math.floor(Math.random() * x.length)];
-}
-
-export function randomUsername() {
-  return `${pick(adverbs)}-${pick(adjectives)}-${pick(commonNouns)}`;
-}
-
-export function getPairKey(user1: string, user2: string): string {
-  return [user1, user2].sort().join("|");
-}

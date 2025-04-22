@@ -1,4 +1,3 @@
-import type { Room } from "@sendhelp/core";
 import db from "../db";
 import type { DirectMessage } from "@sendhelp/core";
 

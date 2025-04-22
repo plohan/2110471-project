@@ -1,4 +1,4 @@
-import { DirectMessage, DirectMessageCreate } from "@sendhelp/core";
+import { DirectMessage, DirectMessageCreate, getPairKey } from "@sendhelp/core";
 import db from "../db";
 
 export async function directMessage(
@@ -25,8 +25,4 @@ export async function directMessage(
   await db.write();
 
   return newMessage;
-}
-
-function getPairKey(user1: string, user2: string): string {
-  return [user1, user2].sort().join("|");
 }

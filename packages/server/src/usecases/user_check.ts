@@ -1,4 +1,3 @@
-import { User } from "@sendhelp/core";
 import db from "../db";
 import { getRandomColor } from "../lib/color";
 

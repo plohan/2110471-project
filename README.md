@@ -34,6 +34,10 @@ SendHelp is a real-time chat application built with modern web technologies. The
 - **Build Tools**: TypeScript, pnpm
 
 ## Extra requirements
+- Persistent message
+- Color-coded user
+- Message timestamp
+- Room message preview
 
 ### Persistance message
 
@@ -76,8 +80,6 @@ docker compose -f .docker/docker-compose.yaml --project-directory . up
 - Create and join chat rooms
 - Persistent message history
 - Modern UI with Tailwind CSS
-
-## Architecture
 
 ### Core
 

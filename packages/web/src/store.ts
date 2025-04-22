@@ -3,6 +3,7 @@ import {
   type Message,
   type Room,
   type DirectMessage,
+  type RoomUpdateNewMember,
   getPairKey,
 } from "@sendhelp/core";
 
@@ -18,6 +19,7 @@ interface State {
   connectedUsers: string[];
   setConnectedUsers: (users: string[]) => void;
   addDirectMessage: (directMessage: DirectMessage) => void;
+  updateRoomNewMember: (newMember: RoomUpdateNewMember) => void;
 }
 
 export const useData = create<State>((set) => ({
@@ -56,6 +58,11 @@ export const useData = create<State>((set) => ({
       };
     });
   },
+  updateRoomNewMember: (newMember: RoomUpdateNewMember) =>
+    set((state) => {
+      const rooms = updateRoomNewMember(state.rooms, newMember);
+      return { rooms };
+    }),
 }));
 
 function addMessage(rooms: Room[], message: Message): Room[] {
@@ -65,6 +72,20 @@ function addMessage(rooms: Room[], message: Message): Room[] {
   }
   if (room.messages.every((m) => m.id !== message.id)) {
     room.messages.push(message);
+  }
+  return rooms;
+}
+
+function updateRoomNewMember(
+  rooms: Room[],
+  newMember: RoomUpdateNewMember,
+): Room[] {
+  const room = rooms.find((room) => room.name == newMember.roomName);
+  if (!room) {
+    return rooms;
+  }
+  if (room.members.every((m) => m.username !== newMember.user.username)) {
+    room.members.push(newMember.user);
   }
   return rooms;
 }

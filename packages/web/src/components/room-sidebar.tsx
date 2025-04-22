@@ -99,11 +99,15 @@ export function RoomSidebar(props: RoomSidebarProps) {
 
               {/* Last message preview */}
               <div className="ml-6 mt-1 text-xs text-gray-400 truncate">
-                <span className="font-medium text-gray-300">
-                  {room.messages.length > 0
-                    ? room.messages[room.messages.length - 1].content
-                    : ""}
-                </span>
+                {room.members.find(
+                  (member) => member.username === data.username,
+                ) && (
+                  <span className="font-medium text-gray-300">
+                    {room.messages.length > 0
+                      ? room.messages[room.messages.length - 1].content
+                      : ""}
+                  </span>
+                )}
               </div>
             </div>
           ))}

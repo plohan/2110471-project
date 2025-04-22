@@ -14,10 +14,20 @@ export type Message = {
 export type Room = {
   name: string;
   messages: Message[];
+  members: User[];
 };
 
 export type RoomCreate = {
   name: string;
+};
+
+export type RoomJoin = {
+  roomName: string;
+};
+
+export type RoomUpdateNewMember = {
+  roomName: string;
+  user: User;
 };
 
 export type User = {

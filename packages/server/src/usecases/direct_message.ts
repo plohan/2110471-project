@@ -9,12 +9,12 @@ export async function directMessage(
   const newMessage: DirectMessage = {
     id: new Date().getTime(),
     from,
-    to: directMessageCreate.other,
+    to: directMessageCreate.to,
     content: directMessageCreate.content,
     color: user?.color,
   };
 
-  const key = getPairKey(from, directMessageCreate.other);
+  const key = getPairKey(from, directMessageCreate.to);
 
   if (!db.data.directMessagePair[key]) {
     db.data.directMessagePair[key] = [];

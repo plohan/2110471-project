@@ -11,7 +11,6 @@ export function useSocketChat() {
     addRoom,
     username,
     addDirectMessage,
-    directMessages,
     initDirectMessage,
   } = data;
 
@@ -54,12 +53,5 @@ export function useSocketChat() {
       socket.off("direct_message_get_all", directMessageGetAll);
       socket.off("direct_message", directMessageCreate);
     };
-  }, [
-    init,
-    addMessage,
-    addRoom,
-    data.username,
-    addDirectMessage,
-    directMessages,
-  ]);
+  }, [init, addMessage, addRoom, data.username, addDirectMessage]);
 }

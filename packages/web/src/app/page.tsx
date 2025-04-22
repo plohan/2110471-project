@@ -6,7 +6,7 @@ import { RoomSidebar } from "@/components/room-sidebar";
 import { ConnectedUserSidebar } from "@/components/connected-user-sidebar";
 import { useSocketChat } from "@/hooks/chat";
 import { useState, useEffect } from "react";
-import { useData } from "@/store"; // Adjust the path if needed
+import { useData } from "@/store";
 import { UsernamePrompt } from "@/components/username-prompt";
 
 export default function Home() {
@@ -56,7 +56,7 @@ export default function Home() {
       </div>
       <main className="flex-1 flex flex-col">
         {other ? (
-          <DirectMessageList other={other} />
+          <DirectMessageList to={other} />
         ) : (
           <MessageList activeRoom={activeRoom} />
         )}

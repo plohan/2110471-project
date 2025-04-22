@@ -13,6 +13,7 @@ import {
   findOrCreateUser,
   directMessage,
   directMessageGetAll,
+  findUser,
 } from "./usecases";
 
 const app = express();
@@ -26,11 +27,13 @@ const io = new Server(server, {
   },
 });
 
-const users = new Map();
+const users = new Set();
 
 io.on("connection", async (socket) => {
   const username = socket.handshake.auth.username;
-  users.set(username, socket.id);
+  users.add(username);
+
+  await findOrCreateUser(username);
 
   io.emit("user_update", Array.from(users.keys())); // broadcast
 
@@ -66,10 +69,15 @@ io.on("connection", async (socket) => {
 
   socket.on("direct_message", async (body: DirectMessageCreate) => {
     await findOrCreateUser(username);
+    console.log(body);
+    const recipient = await findUser(body.to);
+
+    if (!recipient) {
+      return;
+    }
 
     const message = await directMessage(body, username);
-
-    socket.emit("direct_message", message);
+    io.emit("direct_message", message);
   });
 });
 

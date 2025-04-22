@@ -12,32 +12,31 @@ import { socketDirectMessageCreate } from "@/socket";
 import { timestampString } from "@/lib/utils";
 
 interface DirectMessageListProps {
-  other: string | null;
+  to: string | null;
 }
 
 export function DirectMessageList(props: DirectMessageListProps) {
-  const { other } = props;
+  const { to } = props;
   const [directMessages, setDirectMessages] = useState<DirectMessage[]>([]);
   const data = useData();
   useEffect(() => {
-    if (!other || !data.username) {
+    if (!to || !data.username) {
       return;
     }
-    const userPair = data.directMessages[getPairKey(data.username, other)];
+    const userPair = data.directMessages[getPairKey(data.username, to)];
     setDirectMessages(userPair || []);
-  }, [other, data.directMessages, data.username]);
+  }, [to, data.directMessages, data.username]);
   const [newDirectMessage, setNewDirectMessage] = useState("");
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newDirectMessage.trim() || !other) {
+    if (!newDirectMessage.trim() || !to) {
       return;
     }
 
     const directMessage = {
-      key: getPairKey(data.username!, other),
       content: newDirectMessage,
-      other: other,
+      to,
     };
 
     socketDirectMessageCreate(directMessage);
@@ -48,9 +47,7 @@ export function DirectMessageList(props: DirectMessageListProps) {
     <>
       <div className="p-4 border-b border-[#232428] shadow-sm">
         <div className="flex items-center">
-          <span className="text-xl font-bold">
-            DM: {other ?? "Text channel"}
-          </span>
+          <span className="text-xl font-bold">DM: {to ?? "Text channel"}</span>
         </div>
       </div>
 
